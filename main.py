@@ -50,24 +50,26 @@ def mark_complete():
         display_list()
         print("\n----- MARK TASK COMPLETE -----")
         prompt = "MARK: Enter task ID (or 'q' to return): "
-        status_update = input(prompt).strip().lower()
+        id = input(prompt).strip().lower()
         print("-" * 30)
 
-        if status_update in ["q", "quit"]:
+        if id in ["q", "quit"]:
             break
 
         try:
-            status_update = int(status_update)
+            id = int(id)
         except ValueError:
             print("Invalid Input")
             input("Press Enter to continue...")
             continue
 
-        if status_update in database.keys():
-            id = status_update
-            database[id].update({"status": "complete"})
-            item, status = database[id].values()
+        if id in database.keys():
+            if database[id]['status'] == 'complete':
+                database[id].update({"status": "incomplete"})
+            elif database[id]['status'] == 'incomplete':
+                database[id].update({"status": "complete"})
             display_list()
+            item, status = database[id].values()
             print(f"\n{id}: {item.capitalize()} - Status: {status.capitalize()}")
         else:
             print("Your selected item is not exit.")
