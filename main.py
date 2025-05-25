@@ -28,11 +28,15 @@ def add_item():
         os.system("clear")
         display_list()
         print("\n----- ADD NEW TASK -----")
-        add_item = input("ADD: Enter new task (or 'q' to return):")
+        add_item = input("ADD: Enter new task (or 'q' to return):").strip()
         print("-" * 25)
         if add_item in ["q", "quit"]:
             os.system("clear")
             break
+        elif not add_item:
+            print("Input cannot be empty or contain only whitespace.")
+            input("Press Enter to continue...")
+            continue
         else:
             os.system("clear")
             id = len(database) + 1
