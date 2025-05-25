@@ -6,7 +6,7 @@ database = {}
 
 with open("database.json", "r") as file:
     saved_database = json.load(file)
-
+    
 for i, item in enumerate(saved_database.items(), 1):
     database.update({i: item[1]})
 
