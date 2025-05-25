@@ -15,12 +15,12 @@ except NameError:
     pass
 
 
-
 def display_list():
     global database
     print(f"{'=' * 20} TO DO LIST {'=' * 20} ")
     for n, task in database.items():
         print(f"{n}: {task['item'].capitalize()} - {task['status'].capitalize()}")
+
 
 def add_item():
     global database
@@ -30,15 +30,16 @@ def add_item():
         print("\n----- ADD NEW TASK -----")
         add_item = input("ADD: Enter new task (or 'q' to return):")
         print("-" * 25)
-        if add_item in ['q', 'quit']:
+        if add_item in ["q", "quit"]:
             os.system("clear")
             break
         else:
             os.system("clear")
             id = len(database) + 1
-            database[id] = {'item': add_item, 'status': 'incomplete'}
+            database[id] = {"item": add_item, "status": "incomplete"}
             display_list()
             print(f"\n{add_item.capitalize()} is added.")
+
 
 def mark_complete():
     global database
@@ -54,7 +55,7 @@ def mark_complete():
             os.system("clear")
             break
 
-        try :
+        try:
             status_update = int(status_update)
         except ValueError:
             print("Invalid Input")
@@ -73,17 +74,20 @@ def mark_complete():
             input("Press Enter to continue...")
             continue
 
+
 def del_item():
     global database
     while True:
         os.system("clear")
         display_list()
         print("\n----- DELETE TASK -----")
-        delete_item = (input("DELETE: Enter task ID (or 'q' to return): ").strip().lower())
+        delete_item = (
+            input("DELETE: Enter task ID (or 'q' to return): ").strip().lower()
+        )
         if delete_item in ["q", "quit"]:
             os.system("clear")
             break
-        try :
+        try:
             delete_item = int(delete_item)
         except ValueError:
             print("Invalid Input")
@@ -92,8 +96,12 @@ def del_item():
 
         if delete_item in database.keys():
             id = int(delete_item)
-            del_comfirm = input(f"Do you confirm delete {database[id]['item']}? yes or no: ").strip().lower()
-            if del_comfirm == 'yes':
+            del_comfirm = (
+                input(f"Do you confirm delete {database[id]['item']}? yes or no: ")
+                .strip()
+                .lower()
+            )
+            if del_comfirm == "yes":
                 os.system("clear")
                 deleted_item = database.pop(id)
                 update_debate = {}
@@ -109,6 +117,7 @@ def del_item():
             print("Your selected item is not exit.")
             input("Press Enter to continue...")
             continue
+
 
 def main():
     global database
