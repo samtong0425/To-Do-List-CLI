@@ -149,6 +149,7 @@ def main():
         else:
             os.system("clear")
             print("Please enter valid command.")
+            input("Press Enter to continue...")
 
 
 main()
