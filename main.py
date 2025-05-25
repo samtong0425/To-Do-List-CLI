@@ -23,24 +23,56 @@ def display_list():
         print(f"{n}: {task['item'].capitalize()} - {task['status'].capitalize()}")
 
 
-def add_item():
+'''
+===============Business Logic===============
+--Add Task
+--Toggle Task Status
+--Delete Task
+'''
+
+def add_task(new_task, database):
+    new_id = len(database) + 1
+    database[new_id] = {"item": new_task, "status": "incomplete"}
+    return database
+
+def toggle_task_status(id, database):
+    if database[id]['status'] == 'incomplete':
+        database[id].update({"status": "complete"})
+    else:
+        database[id].update({"status": "incomplete"})
+
+def delete_task(id, database):
+    deleted_item = database.pop(id)
+    update_database = {}
+
+    for i, item in enumerate(database.items(), 1):
+        update_database.update({i: item[1]})
+
+    database.clear()
+    database.update(update_database)
+    return deleted_item
+
+'''
+===============Sub-Menu UI===============
+'''
+
+def new_task():
     global database
     while True:
         display_list()
         print("\n----- ADD NEW TASK -----")
-        add_item = input("ADD: Enter new task (or 'q' to return):").strip()
+        new_task = input("ADD: Enter new task (or 'q' to return):").strip()
         print("-" * 25)
-        if add_item in ["q", "quit"]:
+        if new_task in ["q", "quit"]:
             break
-        elif not add_item:
+        elif not new_task:
             print("Input cannot be empty or contain only whitespace.")
             input("Press Enter to continue...")
             continue
         else:
-            id = len(database) + 1
-            database[id] = {"item": add_item, "status": "incomplete"}
+            add_task(new_task, database)
             display_list()
-            print(f"\n{add_item.capitalize()} is added.")
+            print(f"\n{new_task.capitalize()} is added.")
 
 
 def mark_complete():
@@ -64,10 +96,7 @@ def mark_complete():
             continue
 
         if id in database.keys():
-            if database[id]['status'] == 'incomplete':
-                database[id].update({"status": "complete"})
-            else:
-                database[id].update({"status": "incomplete"})
+            toggle_task_status(id, database)
             display_list()
             item, status = database[id].values()
             print(f"\n{id}: {item.capitalize()} - Status: {status.capitalize()}")
@@ -102,13 +131,7 @@ def del_item():
                 .lower()
             )
             if del_comfirm in ["yes", "y"]:
-                deleted_item = database.pop(id)
-                update_debate = {}
-                for i, item in enumerate(database.items(), 1):
-                    update_debate.update({i: item[1]})
-                database.clear()
-                database = update_debate.copy()
-                update_debate.clear()
+                deleted_item = delete_task(id, database)
                 display_list()
                 print(f"\n{deleted_item['item'].capitalize()} is deleted.")
 
@@ -117,6 +140,9 @@ def del_item():
             input("Press Enter to continue...")
             continue
 
+'''
+===============Main Menu UI===============
+'''
 
 def main():
     global database
@@ -127,7 +153,7 @@ def main():
         prompt = "\nCommand: (a)dd, (m)ark, (d)elete, (h)lep, (q)uit: "
         command = input(prompt).strip().lower()
         if command in ["a", "add"]:
-            add_item()
+            new_task()
 
         elif command in ["m", "mark"]:
             mark_complete()
