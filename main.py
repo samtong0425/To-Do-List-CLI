@@ -97,11 +97,11 @@ def del_item():
         if delete_item in database.keys():
             id = int(delete_item)
             del_comfirm = (
-                input(f"Do you confirm delete {database[id]['item']}? yes or no: ")
+                input(f"Do you confirm delete {database[id]['item']}? (y)es or no: ")
                 .strip()
                 .lower()
             )
-            if del_comfirm == "yes":
+            if del_comfirm in ["yes", "y"]:
                 os.system("clear")
                 deleted_item = database.pop(id)
                 update_debate = {}
