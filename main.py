@@ -64,10 +64,10 @@ def mark_complete():
             continue
 
         if id in database.keys():
-            if database[id]['status'] == 'complete':
-                database[id].update({"status": "incomplete"})
-            elif database[id]['status'] == 'incomplete':
+            if database[id]['status'] == 'incomplete':
                 database[id].update({"status": "complete"})
+            else:
+                database[id].update({"status": "incomplete"})
             display_list()
             item, status = database[id].values()
             print(f"\n{id}: {item.capitalize()} - Status: {status.capitalize()}")
