@@ -13,6 +13,8 @@ except FileNotFoundError:
     pass
 except NameError:
     pass
+except json.decoder.JSONDecodeError:
+    pass
 
 
 def display_list():
@@ -178,4 +180,5 @@ def main():
             input("Press Enter to continue...")
 
 
-main()
+if __name__ == "__main__":
+    main()
