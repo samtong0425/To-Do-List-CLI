@@ -2,6 +2,11 @@ import sys
 import os
 import json
 
+
+"""
+===============Open exiting list if any===============
+"""
+
 Database = {}
 
 try:
@@ -15,6 +20,11 @@ except json.decoder.JSONDecodeError:
     pass
 
 
+"""
+===============Display List===============
+"""
+
+
 def display_list(database):
     os.system("clear")
     print(f"{'=' * 20} TO DO LIST {'=' * 20} ")
@@ -22,23 +32,26 @@ def display_list(database):
         print(f"{n}: {task['item'].capitalize()} - {task['status'].capitalize()}")
 
 
-'''
+"""
 ===============Business Logic===============
 --Add Task
 --Toggle Task Status
 --Delete Task
-'''
+"""
+
 
 def add_task(new_task, database):
     new_id_int = len(database) + 1
     new_id_str = str(new_id_int)
     database[new_id_str] = {"item": new_task, "status": "incomplete"}
 
+
 def toggle_task_status(id_str, database):
-    if database[id_str]['status'] == 'incomplete':
+    if database[id_str]["status"] == "incomplete":
         database[id_str].update({"status": "complete"})
     else:
         database[id_str].update({"status": "incomplete"})
+
 
 def delete_task(id_str, database):
     deleted_item = database.pop(id_str)
@@ -51,9 +64,11 @@ def delete_task(id_str, database):
     database.update(update_database)
     return deleted_item
 
-'''
+
+"""
 ===============Sub-Menu UI===============
-'''
+"""
+
 
 def new_task_menu(database):
     while True:
@@ -107,13 +122,15 @@ def del_item_menu(database):
 
         if delete_item in database.keys():
             del_comfirm = (
-                input(f"Do you confirm delete {database[delete_item]['item']}? (y)es or no: ")
+                input(
+                    f"Do you confirm delete {database[delete_item]['item']}? (y)es or no: "
+                )
                 .strip()
                 .lower()
             )
             if del_comfirm in ["yes", "y"]:
                 deleted_item = delete_task(delete_item, database)
-                display_list(database   )
+                display_list(database)
                 print(f"\n{deleted_item['item'].capitalize()} is deleted.")
 
         else:
@@ -121,9 +138,11 @@ def del_item_menu(database):
             input("Press Enter to continue...")
             continue
 
-'''
+
+"""
 ===============Main Menu UI===============
-'''
+"""
+
 
 def main():
     global database
