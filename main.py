@@ -17,6 +17,7 @@ except NameError:
 
 def display_list():
     global database
+    os.system("clear")
     print(f"{'=' * 20} TO DO LIST {'=' * 20} ")
     for n, task in database.items():
         print(f"{n}: {task['item'].capitalize()} - {task['status'].capitalize()}")
@@ -25,20 +26,17 @@ def display_list():
 def add_item():
     global database
     while True:
-        os.system("clear")
         display_list()
         print("\n----- ADD NEW TASK -----")
         add_item = input("ADD: Enter new task (or 'q' to return):").strip()
         print("-" * 25)
         if add_item in ["q", "quit"]:
-            os.system("clear")
             break
         elif not add_item:
             print("Input cannot be empty or contain only whitespace.")
             input("Press Enter to continue...")
             continue
         else:
-            os.system("clear")
             id = len(database) + 1
             database[id] = {"item": add_item, "status": "incomplete"}
             display_list()
@@ -48,7 +46,7 @@ def add_item():
 def mark_complete():
     global database
     while True:
-        os.system("clear")
+        
         display_list()
         print("\n----- MARK TASK COMPLETE -----")
         prompt = "MARK: Enter task ID (or 'q' to return): "
@@ -56,7 +54,6 @@ def mark_complete():
         print("-" * 30)
 
         if status_update in ["q", "quit"]:
-            os.system("clear")
             break
 
         try:
@@ -68,7 +65,6 @@ def mark_complete():
 
         if status_update in database.keys():
             id = status_update
-            os.system("clear")
             database[id].update({"status": "complete"})
             item, status = database[id].values()
             display_list()
@@ -82,14 +78,12 @@ def mark_complete():
 def del_item():
     global database
     while True:
-        os.system("clear")
         display_list()
         print("\n----- DELETE TASK -----")
         delete_item = (
             input("DELETE: Enter task ID (or 'q' to return): ").strip().lower()
         )
         if delete_item in ["q", "quit"]:
-            os.system("clear")
             break
         try:
             delete_item = int(delete_item)
@@ -106,7 +100,6 @@ def del_item():
                 .lower()
             )
             if del_comfirm in ["yes", "y"]:
-                os.system("clear")
                 deleted_item = database.pop(id)
                 update_debate = {}
                 for i, item in enumerate(database.items(), 1):
