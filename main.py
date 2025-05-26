@@ -63,7 +63,7 @@ def add_task(new_task, database):
         
         month, day = user.split("/")
         task_day = date(year, int(month), int(day))
-        due_date = f"{task_day.month:02d}-{task_day.day:02d}"
+        due_date = f"{task_day.month:02d}/{task_day.day:02d}"
         database[new_id_str] = {"item": new_task, "status": "incomplete", "due": due_date}
         return
 
