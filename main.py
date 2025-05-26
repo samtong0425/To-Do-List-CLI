@@ -2,6 +2,7 @@ import sys
 import os
 import json
 from tabulate import tabulate
+from datetime import date
 
 
 """
@@ -33,7 +34,7 @@ def display_list(database):
     for i, item in enumerate(database.items(), 1):
         table_database.append({"id": str(i)})
         table_database[i - 1].update(item[1])
-    print(tabulate(table_database, tablefmt="grid"))
+    print(tabulate(table_database, tablefmt="grid", headers="keys"))
 
 
 """
@@ -47,7 +48,24 @@ def display_list(database):
 def add_task(new_task, database):
     new_id_int = len(database) + 1
     new_id_str = str(new_id_int)
-    database[new_id_str] = {"item": new_task, "status": "incomplete"}
+    while True:
+        user = input("Data: ")
+        today = date.today()
+        year = today.year
+
+        try:
+            month, day = user.split("/")
+            task_day = date(year, int(month), int(day))
+        except ValueError:
+            print("Invalid date")
+            input("Press Enter to continue...")
+            continue
+        
+        month, day = user.split("/")
+        task_day = date(year, int(month), int(day))
+        due_date = f"{task_day.month:02d}-{task_day.day:02d}"
+        database[new_id_str] = {"item": new_task, "status": "incomplete", "due": due_date}
+        return
 
 
 def toggle_task_status(id_str, database):
@@ -88,6 +106,7 @@ def new_task_menu(database):
             continue
         else:
             add_task(new_task, database)
+
             display_list(database)
             print(f"\n{new_task.capitalize()} is added.")
 
