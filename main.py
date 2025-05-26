@@ -1,6 +1,8 @@
 import sys
 import os
 import json
+from tabulate import tabulate
+
 
 
 """
@@ -28,8 +30,13 @@ except json.decoder.JSONDecodeError:
 def display_list(database):
     os.system("clear")
     print(f"{'=' * 20} TO DO LIST {'=' * 20} ")
-    for n, task in database.items():
-        print(f"{n}: {task['item'].capitalize()} - {task['status'].capitalize()}")
+    table_database = []
+    for i, item in enumerate(database.items(), 1):
+        table_database.append({"id" :str(i)})
+        table_database[i-1].update(item[1])
+    print(tabulate(table_database, tablefmt="grid"))
+    # for n, task in database.items():
+    #     print(f"{n}: {task['item'].capitalize()} - {task['status'].capitalize()}")
 
 
 """
@@ -165,6 +172,8 @@ def main():
             os.system("clear")
             with open("help.txt") as help:
                 print(f"{help.read()}\n")
+            input("Press Enter to continue...")
+            
 
         elif command in ["q", "quit"]:
             with open("database.json", "w") as file:
