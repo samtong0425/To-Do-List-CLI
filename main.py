@@ -49,7 +49,7 @@ def add_task(new_task, database):
     new_id_int = len(database) + 1
     new_id_str = str(new_id_int)
     while True:
-        user = input("Data: ")
+        user = input("Date (MM/DD): ")
         today = date.today()
         year = today.year
 
@@ -125,7 +125,7 @@ def mark_complete_menu(database):
         if id_str in database.keys():
             toggle_task_status(id_str, database)
             display_list(database)
-            item, status = database[id_str].values()
+            item, status, due_day = database[id_str].values()
             print(f"\n{id_str}: {item.capitalize()} - Status: {status.capitalize()}")
         else:
             print("Your selected item is not exit.")
