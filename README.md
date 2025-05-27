@@ -1,5 +1,6 @@
 # To-Do-List-CLI
 A  command-line to-do list application built as a CS50P final project.
+![Screenshot From 2025-05-27 21-26-42](https://github.com/user-attachments/assets/f185d99e-6de8-4b98-a3f1-e4d97b34016d)
 
 # How to use
 - When adding tasks, type the task description and due datea. Then, press Enter
